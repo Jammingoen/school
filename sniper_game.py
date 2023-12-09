@@ -37,13 +37,13 @@ class QuadraticGraph(QWidget):
         self.point_a_edit.setFixedWidth(input_width)
 
         # 게임 설명 라벨 추가
-        self.game_description_label = QLabel('탄도학공식: a * (x_values-target_distance)**2 + Maximum_altitude\n t_distance에 타겟과의 거리를 입력하세요.\n target_size에는 타겟의 크기를 넣어주세요.\n a는 탄도학 공식에서 타겟을 맞출수있는 적절한 기울기를 넣어 주세요.\n Maximum_altitude에는 탄환의 궤적이 타겟과 닿을수있는 적절한 값을 넣어주세요. 타겟의 최상단을 맞춰야 헤드샷(사살)판정으로 명중입니다.\n 헤드샷이 아니면 빗나감판정이 나오고 총이 발사되지 않은것으로 처리됩니다\n 직접 계산하여 헤드샷을 노리세요!', self)
+        self.game_description_label = QLabel('탄도학공식: a * (x_values-target_distance)**2 + Maximum_altitude\n t_distance에 타겟과의 거리를 입력하세요.\n target_size에는 타겟의 크기를 넣어주세요.\n a는 탄도학 공식에서 타겟을 맞출수있는 적절한 기울기를 넣어 주세요.\n Maximum_altitude에는 탄환의 궤적이 타겟과 닿을수있는 적절한 값을 넣어주세요. 타겟의 최상단을 맞춰야 헤드샷(사살)판정으로 명중입니다.\n 헤드샷이 아니면 히트판정이 나오고 사살하지 않은것으로 처리됩니다\n 직접 계산하여 헤드샷을 노리세요!', self)
         self.game_description_label.setStyleSheet('font-weight: bold; font-size: 12px;')
         self.game_description_label.setAlignment(Qt.AlignRight)
 
     
         self.plot_button = QPushButton('FIRE', self)
-        self.plot_button.clicked.connect(self.plot_quadratic)
+        self.plot_button.clicked.connect(self.trajectory_function)
 
         # Matplotlib 그래프 초기화
         self.figure = Figure()
@@ -66,7 +66,7 @@ class QuadraticGraph(QWidget):
 
         self.setLayout(layout)
 
-    def plot_quadratic(self):
+    def trajectory_function(self):
         # 기존 그래프를 지우고, 새로운 그래프를 그립니다.
         self.ax.clear()
 
@@ -126,7 +126,7 @@ class QuadraticGraph(QWidget):
                     print("헤드샷! 목표를 사살하였습니다.")
                     return
 
-            print("미스! 총이 발사되지 않았습니다.")
+            print("히트! 사살못함.")
 
         except ValueError as e:
             print(f"잘못된 입력 값입니다: {e}")
