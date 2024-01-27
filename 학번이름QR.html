@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <form id="qr-form">
+        <label for="student-id">학번:</label>
+        <input type="text" id="student-id" name="student_id">
+        <br>
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name">
+        <br>
+        <button type="submit">QR 코드 생성</button>
+    </form>
+
+    <div id="qr-code"></div>
+
+    <script>
+        const form = document.querySelector('#qr-form');
+        const qrCodeDiv = document.querySelector('#qr-code');
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const studentId = document.querySelector('#student-id').value;
+            const name = document.querySelector('#name').value;
+            const data = `${studentId}, ${name}`;
+
+            const qrCode = new QRCode(document.getElementById('qr-code'), {
+              text: data,
+              width: 300,
+              height: 300,
+              correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+    </script>
+</body>
+</html>
